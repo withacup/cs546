@@ -55,10 +55,6 @@ module.exports = () => {
 					})
 				}
 
-				const deleteOneFileInCollection = (colName) => {
-
-				}
-
 				const getAllCollectionName = () => {
 					return Promise.resolve(collectionsInJSON);
 				}
