@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/FormyGF/cs546/issues"
   },
-  "homepage": "https://github.com/FormyGF/cs546#readme"
+  "homepage": "https://github.com/FormyGF/cs546#readme",
+  "dependencies": {
+    "mongodb": "^2.2.11"
+  }
 }
