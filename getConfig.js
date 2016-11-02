@@ -28,31 +28,30 @@ let mywrite = (path, data) => {
 
 const datatobewrite = '{\n\t"dbURL": "mongodb://localhost:27017/",\n\t"dbName": "duplicateDB",\n\t"collections": ["duplicateCol"]\n}'
 
-let p = __dirname + "/test.json"
-console.log(p);
+let p = __dirname + "/test.json" // then path to store the config file
 
 let config = () => {
-	return myread(p)
-		.then(data => {
-			// console.log(data);
-			return data;
-		})
-		.catch(err => {
-			console.log(err);
-			mywrite(p, datatobewrite)
-				.then(res => {
-					// console.log('I am here')
-					// console.log(res);
-					return myread(p);
-				})
-				.then(data => {
-					// console.log(data);
-					return data
-				})
-				.catch(err => {
-					console.log(err);
-				})
-		})
+
+	return new Promise((resolve, rejct) => {
+		myread(p)
+			.then(data => {
+				// console.log(data);
+				resolve(data);
+			})
+			.catch(err => {
+				console.log(`Initiating the test.js file on path: ${p}`)
+				mywrite(p, datatobewrite)
+					.then(res => {
+						return myread(p);
+					})
+					.then(data => {
+						resolve(data); 
+					})
+					.catch(err => {
+						reject(err);
+					})
+			})
+	})
 }
 
 module.exports = config;
