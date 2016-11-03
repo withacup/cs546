@@ -27,7 +27,7 @@ let mywrite = (path, data) => {
 
 const datatobewrite = '{\n\t"dbURL": "mongodb://localhost:27017/",\n\t"dbName": "duplicateDB",\n\t"collections": ["duplicateCol"],\n\t"AutoRemove": "OFF",\n\t"AutoDrop": "OFF"\n}'
 
-let p = __dirname + "/../../config.json" // the path to store the config file
+let p = __dirname + "/config.json" // the path to store the config file
 
 let config = () => {
 
@@ -37,7 +37,7 @@ let config = () => {
 				resolve(data);
 			})
 			.catch(err => {
-				console.log(`Initiating the test.js file on path: ${p}`);
+				console.log(`Initiating the config.js file on path: ${p}`);
 				mywrite(p, datatobewrite)
 					.then(res => {
 						return myread(p);

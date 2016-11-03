@@ -10,7 +10,6 @@ module.exports = () => {
 	return new Promise((resolve, reject) => {
 		dbConnection
 			.then(res => {
-				// console.log(res);
 
 				connectDb = res.connectDb;
 				collectionsInJSON = res.collections;
@@ -19,21 +18,6 @@ module.exports = () => {
 
 				// console.log("removeAllFiles: " + removeAllFiles);
 				// console.log('dropAllCollections: ' + dropAllCollections);
-
-				connectDb()
-					.then(db => {
-						if (dropAllCollections) {
-							// if client wants to automaticlly drop all duplicate collections
-							dropCollections(db, collectionsInJSON);
-						}
-						if (removeAllFiles) {
-							// if client wants to automaticlly drop all duplicate collections
-							clearCollections(db);
-						}
-					})
-					.catch(err => {
-						console.log(err);
-					})
 
 				const getCollectionWithName = (colName) => {
 					return new Promise((resolve, reject) => {
@@ -63,11 +47,27 @@ module.exports = () => {
 					return connectDb();
 				}
 
-				resolve({
-					getCollectionWithName: getCollectionWithName,
-					getAllCollectionName: getAllCollectionName,
-					getDatabase: getDatabase
-				});
+				connectDb()
+					.then(db => {
+						if (dropAllCollections) {
+							// if client wants to automaticlly drop all duplicate collections
+							dropCollections(db, collectionsInJSON);
+						}
+						if (removeAllFiles) {
+							// if client wants to automaticlly drop all duplicate collections
+							clearCollections(db);
+						}
+					})
+					.then(() => {
+						resolve({
+							getCollectionWithName: getCollectionWithName,
+							getAllCollectionName: getAllCollectionName,
+							getDatabase: getDatabase
+						});
+					})
+					.catch(err => {
+						console.log(err.message + "\n\tMake sure you have your mongodb running\n\tMac: brew services start mongodb");
+					})
 			})
 	})
 }

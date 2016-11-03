@@ -101,13 +101,31 @@ module.exports = () => {
 					})
 				}
 
+				const findAll = (colName) => {
+					if (!colName) return Promise.reject("ERROR: You Need To Provide a Collection Name")
+					return new Promise((resolve, reject) => {
+						res.getCollectionWithName(colName)
+						.then(col => {
+							return col.find({}).toArray();
+						})
+						.then(arr => {
+							resolve(arr);
+						})
+						.catch(err => {
+							reject(err);
+						})
+					})
+				}
+
 				resolve({
 					insertOne: insertOne,
 					updateOne: updateOne,
 					deleteOne: deleteOne,
 					findOne: findOne,
 					getCollectionWithName: res.getCollectionWithName,
-					getDatabase: res.getDatabase
+					getDatabase: res.getDatabase,
+					findAll: findAll,
+					getAllCollectionName: res.getAllCollectionName
 				})
 			});
 	})
