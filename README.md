@@ -70,4 +70,5 @@ easyDb().then(res => {
 	console.log(err);
 })
 
+
 ```
